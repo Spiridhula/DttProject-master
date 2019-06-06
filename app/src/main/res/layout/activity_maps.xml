@@ -17,11 +17,15 @@
         android:layout_alignParentTop="true">
 
         <Button
-            android:id="@+id/btn_maps_back"
+            android:id="@+id/btnback"
             style=""
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="0dp"
             android:drawableStart="@drawable/menu_arrow"
 
             android:text="RSR Pechhulp" />
@@ -110,6 +114,8 @@
         android:id="@+id/imv_maps_location_obtaining"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/clock_mini"
-        android:layout_centerInParent="true"/>
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="237dp"
+        android:src="@drawable/clock_mini" />
 </RelativeLayout>

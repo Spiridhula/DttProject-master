@@ -12,7 +12,7 @@ import android.support.v7.app.AlertDialog;
 
 public class CheckGpsAndInternet {
 
-
+//Class used to check the internet and  Gps connectivity,and then report using Alert Dialogue
 
     public static boolean checkGPSEnabled(Context context) {
         final LocationManager locationManager = (LocationManager)

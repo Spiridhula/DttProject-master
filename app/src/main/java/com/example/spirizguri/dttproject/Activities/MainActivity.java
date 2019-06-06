@@ -66,15 +66,7 @@ public class MainActivity extends AppCompatActivity {
                 TextView msgTxt = (TextView) alertDialog.findViewById(android.R.id.message);
                 msgTxt.setMovementMethod(LinkMovementMethod.getInstance());
 
-
-
-
-
-
-
-
-
-            }
+                }
         });
 
         Button button1 = (Button) findViewById(R.id.button);
@@ -90,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+       /* ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         android.net.NetworkInfo wifi = cm
                 .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
         android.net.NetworkInfo datac = cm
@@ -103,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "No Internet Connection",
                     Toast.LENGTH_LONG);
             toast.show();
-        }
+        }*/
 
 
 

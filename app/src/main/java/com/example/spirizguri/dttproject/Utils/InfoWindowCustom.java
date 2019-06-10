@@ -43,6 +43,7 @@ public class InfoWindowCustom implements GoogleMap.InfoWindowAdapter {
 
         title.setText(marker.getTitle());
         address.setText(marker.getSnippet());
+        //add the info
 
 
         return v ;

@@ -1,33 +1,46 @@
 package com.example.spirizguri.dttproject.Activities;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
+import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-import android.support.v4.app.Fragment;
 
 import com.example.spirizguri.dttproject.R;
+import com.example.spirizguri.dttproject.Utils.InfoWindowCustom;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+
+public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWindowClickListener
+        ,OnMapReadyCallback {
 
 
     private GoogleMap mMap;
@@ -38,13 +51,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private Location myLocation;
     private double latitude = 0.0d, longitude = 0.0d;
+    private Activity activity;
     public final static int TAG_PERMISSION_CODE = 1;
     Button btnback;
+    private ReentrantLock addressObtainedLock;
+    String addressString = "No address found";
+    String routeString="Noroute found";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        addressObtainedLock = new ReentrantLock();
         //Returning to the Main Activity
 
         Button btnback= (Button)findViewById(R.id.btnback);
@@ -105,24 +123,60 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         @Override
         public void onMapReady (GoogleMap googleMap){
             mMap = googleMap;
-            if (currentLocation!=null){
-            LatLng latLng = new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude());
-
-            MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("You are Here");
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
-            googleMap.addMarker(markerOptions);}
+            String latLongString;
 
 
-            // Add a marker in Sydney and move the camera
+            if (currentLocation!=null) {
+                LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+                double lat = currentLocation.getLatitude();
+                double lng = currentLocation.getLongitude();
+                latLongString = "Lat:" + lat + "\nLong:" + lng;
+                Geocoder gc = new Geocoder(this, Locale.getDefault());
+                try {
+                    List<Address> adresses = gc.getFromLocation(lat, lng, 1);
+                    StringBuilder sb = new StringBuilder();
+                    StringBuilder sb1= new StringBuilder();
+                    if (adresses.size() > 0) {
+                        Address address = adresses.get(0);
+
+                        for (int i = 0; i < address.getMaxAddressLineIndex(); i++)
+                            sb.append(address.getAddressLine(i)).append("\n");
+
+                        sb.append(address.getCountryName());
+                        sb1.append(address.getLocality());
+                    }
+                    addressString = sb.toString();
+                    routeString=sb1.toString();
+                    }
+                 catch (IOException e) {}
+
+
+
+                 MarkerOptions markerOptions = new MarkerOptions().position(latLng)
+                                    .title(addressString)
+                                     .snippet(routeString)
+
+                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                                    .visible(true);
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+
+
+                            InfoWindowCustom infowindow = new InfoWindowCustom(MapsActivity.this);
+                            googleMap.setInfoWindowAdapter(infowindow);
+                            googleMap.addMarker(markerOptions).showInfoWindow();
+                        }
+
+                        // Add a marker in Sydney and move the camera
            // LatLng sydney = new LatLng(-34, 151);
            // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
            // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
 
-            mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+            mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 
         }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -138,9 +192,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    @Override
+    public void onInfoWindowClick(Marker marker) {
 
-
-
-
+    }
 }
 

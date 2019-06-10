@@ -14,6 +14,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -140,13 +141,15 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
                         Address address = adresses.get(0);
 
                         for (int i = 0; i < address.getMaxAddressLineIndex(); i++)
-                            sb.append(address.getAddressLine(i)).append("\n");
+                            sb.append(address.getAddressLine(i)).append(" ");
 
                         sb.append(address.getCountryName());
                         sb1.append(address.getLocality());
+
                     }
                     addressString = sb.toString();
                     routeString=sb1.toString();
+
                     }
                  catch (IOException e) {}
 

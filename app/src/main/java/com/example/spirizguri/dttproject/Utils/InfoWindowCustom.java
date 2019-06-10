@@ -1,5 +1,6 @@
 package com.example.spirizguri.dttproject.Utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,14 +32,18 @@ public class InfoWindowCustom implements GoogleMap.InfoWindowAdapter {
     public View getInfoContents(Marker marker) {
 
 
-        inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        //inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View v = inflater.inflate(R.layout.infowindow, null);
+        //View v = inflater.inflate(R.layout.infowindow, null);
+        View v = ((Activity)context).getLayoutInflater()
+                .inflate(R.layout.infowindow, null);
         v.setLayoutParams(new RelativeLayout.LayoutParams(500,300));
         TextView title = (TextView) v.findViewById(R.id.infowindowtitle);
-        TextView subtitle = (TextView) v.findViewById(R.id.location);
+        TextView address = (TextView) v.findViewById(R.id.address);
+
         title.setText(marker.getTitle());
-        subtitle.setText(marker.getSnippet());
+        address.setText(marker.getSnippet());
+
 
         return v ;
     }

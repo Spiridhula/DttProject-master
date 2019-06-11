@@ -142,13 +142,14 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
 
                         for (int i = 0; i < address.getMaxAddressLineIndex(); i++)
                             sb.append(address.getAddressLine(i)).append(" ");
+                        sb.append(adresses.get(0).getFeatureName() + ", " + adresses.get(0).getLocality() +", " + adresses.get(0).getAdminArea() + ", " + adresses.get(0).getCountryName());
 
-                        sb.append(address.getCountryName());
-                        sb1.append(address.getLocality());
+                        //sb.append(address.getCountryName());
+                        //sb1.append(address.getLocality());
 
                     }
                     addressString = sb.toString();
-                    routeString=sb1.toString();
+                    //routeString=sb1.toString();
 
                     }
                  catch (IOException e) {}
@@ -157,7 +158,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
 
                  MarkerOptions markerOptions = new MarkerOptions().position(latLng)
                                     .title(addressString)
-                                     .snippet(routeString)
+                                     //.snippet(routeString)
 
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                                     .visible(true);

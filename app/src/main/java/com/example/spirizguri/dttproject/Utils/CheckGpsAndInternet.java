@@ -5,10 +5,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.LocationManager;
+import android.location.SettingInjectorService;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.provider.Settings;
 import android.support.v7.app.AlertDialog;
+
+import java.net.Authenticator;
 
 public class CheckGpsAndInternet {
 
@@ -24,10 +27,10 @@ public class CheckGpsAndInternet {
 
 
 
-    public static AlertDialog buildAlertMessageGpsDisabled(final Activity activity) {
+    public static AlertDialog AlertDialogueGpsDisabled(final Activity activity) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage("Error")
-                .setTitle("Network isnt working")
+        builder.setMessage("Unable to find your location.Please check your Gps")
+                .setTitle("Location Error")
                 .setCancelable(false)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -58,15 +61,16 @@ public class CheckGpsAndInternet {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
-    public static AlertDialog buildAlertMessageNoInternet(final Activity activity, final RetryClickListener onRetryClickListener) {
+    public static AlertDialog AlertDialogueNoInternet(final Activity activity,final RetryClickListener retryClickListener) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setMessage("Error")
-                .setTitle("Error")
+        builder.setMessage("Unable to locate your address.Please check your connection")
+                .setTitle("Internet Error")
                 .setCancelable(false)
-                .setPositiveButton("Retry", new DialogInterface.OnClickListener() {
+                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        onRetryClickListener.onRetryClick();
+                        retryClickListener.onRetryClick();
+
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

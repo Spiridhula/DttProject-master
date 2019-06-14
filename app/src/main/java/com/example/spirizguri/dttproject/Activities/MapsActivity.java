@@ -1,5 +1,6 @@
 package com.example.spirizguri.dttproject.Activities;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
@@ -10,6 +11,8 @@ import android.location.Criteria;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
+import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
@@ -17,6 +20,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.example.spirizguri.dttproject.R;
@@ -50,24 +55,28 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
     private FusedLocationProviderClient fusedLocationProviderClient;
     private static final int LOCATION_REQUEST_CODE = 101;
 
-    private Location myLocation;
-    private double latitude = 0.0d, longitude = 0.0d;
-    private Activity activity;
-    public final static int TAG_PERMISSION_CODE = 1;
-    Button btnback;
-    private ReentrantLock addressObtainedLock;
+
+
+
+
+
     String addressString = "No address found";
-    String routeString="Noroute found";
+
+    private RelativeLayout callPopUp;
+    private Button buttonCallNow;
+    private Button btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        addressObtainedLock = new ReentrantLock();
+
+        callPopUp = findViewById(R.id.call_popop);
+        buttonCallNow = findViewById(R.id.callbtn);
         //Returning to the Main Activity
 
-        Button btnback= (Button)findViewById(R.id.btnback);
-        btnback.setOnClickListener(new View.OnClickListener() {
+        btnBack= (Button)findViewById(R.id.btnback);
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
                startActivity( new Intent(MapsActivity.this, MainActivity.class));
@@ -101,7 +110,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
                 public void onSuccess(Location location) {
                     if (location != null) {
                         currentLocation = location;
-                        Toast.makeText(MapsActivity.this, currentLocation.getLatitude() + " " + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MapsActivity.this, currentLocation.getLatitude() + " " + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
                         SupportMapFragment supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
                         supportMapFragment.getMapAsync(MapsActivity.this);
                     } else {
@@ -123,15 +132,19 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
          */
         @Override
         public void onMapReady (GoogleMap googleMap){
+
+            //Adding marker to the current location,using geocoder to get your address
             mMap = googleMap;
-            String latLongString;
+            ImageView locObtaining;
+
+            float zoomLevel = (float) 18.0;
 
 
             if (currentLocation!=null) {
                 LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
                 double lat = currentLocation.getLatitude();
                 double lng = currentLocation.getLongitude();
-                latLongString = "Lat:" + lat + "\nLong:" + lng;
+
                 Geocoder gc = new Geocoder(this, Locale.getDefault());
                 try {
                     List<Address> adresses = gc.getFromLocation(lat, lng, 1);
@@ -142,14 +155,13 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
 
                         for (int i = 0; i < address.getMaxAddressLineIndex(); i++)
                             sb.append(address.getAddressLine(i)).append(" ");
-                        sb.append(adresses.get(0).getFeatureName() + ", " + adresses.get(0).getLocality() +", " + adresses.get(0).getAdminArea() + ", " + adresses.get(0).getCountryName());
+                        sb.append(adresses.get(0).getAddressLine(0) + ", " + adresses.get(0).getCountryName());
 
-                        //sb.append(address.getCountryName());
-                        //sb1.append(address.getLocality());
+
 
                     }
                     addressString = sb.toString();
-                    //routeString=sb1.toString();
+
 
                     }
                  catch (IOException e) {}
@@ -158,11 +170,11 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
 
                  MarkerOptions markerOptions = new MarkerOptions().position(latLng)
                                     .title(addressString)
-                                     //.snippet(routeString)
+
 
                                     .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
                                     .visible(true);
-                            googleMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoomLevel));
 
 
                             InfoWindowCustom infowindow = new InfoWindowCustom(MapsActivity.this);
@@ -170,28 +182,45 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
                             googleMap.addMarker(markerOptions).showInfoWindow();
                         }
 
-                        // Add a marker in Sydney and move the camera
-           // LatLng sydney = new LatLng(-34, 151);
-           // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-           // mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
 
 
             mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+            locObtaining= findViewById(R.id.location_obtaining);
+            locObtaining.setVisibility(View.GONE);
 
 
         }
 
 
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
+
             case LOCATION_REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     fetchLastLocation();
                 } else {
-                    Toast.makeText(MapsActivity.this,"Location permission missing",Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(this, MainActivity.class);
+                    startActivity(intent);
+                    Toast.makeText(MapsActivity.this, "Location permission missing", Toast.LENGTH_SHORT).show();
                 }
                 break;
+                //Ask to allow the app to make phone calls
+
+            case 2: {
+
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(getApplicationContext(), "Permission granted", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(Intent.ACTION_DIAL);
+                    intent.setData(Uri.parse("tel:0123456789"));
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Permission denied", Toast.LENGTH_SHORT).show();
+                }
+
+            }
         }
     }
 
@@ -200,5 +229,53 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
     public void onInfoWindowClick(Marker marker) {
 
     }
+
+    public void btnCallNowClick(View view) {
+       callPopUp.setVisibility(View.VISIBLE);
+        buttonCallNow.setVisibility(View.GONE);
+    }
+
+    public void btnPopupCloseClick(View view) {
+        callPopUp.setVisibility(View.GONE);
+        buttonCallNow.setVisibility(View.VISIBLE);
+    }
+    public  boolean isPermissionGranted() {
+        if (Build.VERSION.SDK_INT >= 23) {
+            if (checkSelfPermission(android.Manifest.permission.CALL_PHONE)
+                    == PackageManager.PERMISSION_GRANTED) {
+                Log.v("TAG","Permission is granted");
+                return true;
+            } else {
+
+                Log.v("TAG","Permission is revoked");
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, 1);
+                return false;
+            }
+        }
+        else { //permission is automatically granted on sdk<23 upon installation
+            Log.v("TAG","Permission is granted");
+            return true;
+        }
+    }
+
+
+
+    public void DialClick(View view){
+
+            //After granting the permission,clicking again on the bel nu button will allow us to make a call.
+
+        if(isPermissionGranted()){
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:0123456789"));
+            startActivity(intent);
+        }
+    }
+
+
+
+
+
+
+
 }
 

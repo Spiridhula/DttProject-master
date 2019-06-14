@@ -32,17 +32,14 @@ public class InfoWindowCustom implements GoogleMap.InfoWindowAdapter {
     public View getInfoContents(Marker marker) {
 
 
-        //inflater=(LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        //View v = inflater.inflate(R.layout.infowindow, null);
         View v = ((Activity)context).getLayoutInflater()
                 .inflate(R.layout.infowindow, null);
         v.setLayoutParams(new RelativeLayout.LayoutParams(500,300));
         TextView title = (TextView) v.findViewById(R.id.infowindowtitle);
-       //TextView address = (TextView) v.findViewById(R.id.address);
 
         title.setText(marker.getTitle());
-        //address.setText(marker.getSnippet());
+
         //add the info
 
 

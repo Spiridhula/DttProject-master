@@ -11,6 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -21,7 +22,10 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".Activities.SplashScreen"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+           android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -30,11 +34,13 @@
         </activity>
         <activity
             android:name=".Activities.MainActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
             <intent-filter>
                 <action
                     android:name="android.intent.action.MAIN"
-                    android:theme="@android:style/Theme.NoTitleBar" />
+                     />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>

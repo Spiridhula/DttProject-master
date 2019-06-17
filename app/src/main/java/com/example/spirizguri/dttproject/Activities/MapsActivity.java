@@ -75,7 +75,7 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
         buttonCallNow = findViewById(R.id.callbtn);
         //Returning to the Main Activity
 
-        btnBack= (Button)findViewById(R.id.btnback);
+        btnBack= findViewById(R.id.btnback);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){

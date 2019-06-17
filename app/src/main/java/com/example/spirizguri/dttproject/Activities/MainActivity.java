@@ -11,7 +11,7 @@ import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.spirizguri.dttproject.R;
@@ -27,14 +27,12 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
-
         setContentView(R.layout.activity_main);
 
 
 
         //The privacy info Dialogue
-        ImageButton privacyinfo = (ImageButton) findViewById(R.id.infobtn);
+        ImageView privacyinfo = findViewById(R.id.infobtn);
         privacyinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,13 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
                 AlertDialog alertDialog = builder.create();
                 alertDialog.show();
-                TextView msgTxt = (TextView) alertDialog.findViewById(android.R.id.message);
+                TextView msgTxt = alertDialog.findViewById(android.R.id.message);
                 msgTxt.setMovementMethod(LinkMovementMethod.getInstance());
 
                 }
         });
 
-        Button RSRPECHHULP = (Button) findViewById(R.id.rsrbtn);
+        Button RSRPECHHULP = findViewById(R.id.rsrbtn);
         RSRPECHHULP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

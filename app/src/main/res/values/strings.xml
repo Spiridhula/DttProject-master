@@ -22,4 +22,6 @@
     <string name="popup_address_info">Onthoud deze locatie voor het telefoongesprek.</string>
     <string name="popup_address_title">Uw Locatie:</string>
     <string name="popup_address_obtaining">Verkrijgen adres&#8230;</string>
+
+    <string name="home_topbar_title">RSR Revalidatieservice</string>
 </resources>

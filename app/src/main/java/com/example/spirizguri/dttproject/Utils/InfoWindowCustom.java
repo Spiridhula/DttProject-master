@@ -15,9 +15,7 @@ public class InfoWindowCustom implements GoogleMap.InfoWindowAdapter {
 
 
 
-    Context context;
-    LayoutInflater inflater;
-
+    private Context context;
 
 
     public InfoWindowCustom(Context context){
@@ -25,27 +23,18 @@ public class InfoWindowCustom implements GoogleMap.InfoWindowAdapter {
     }
     @Override
     public View getInfoWindow(Marker marker) {
-       return null;
+
+        View v = ((Activity) context).getLayoutInflater()
+                .inflate(R.layout.infowindow, null);
+
+        TextView title = v.findViewById(R.id.infowindowtitle);
+
+        title.setText(marker.getTitle());
+        return v;
     }
 
     @Override
     public View getInfoContents(Marker marker) {
-
-
-        //add the info
-
-
-        View v;
-        v = ((Activity)context).getLayoutInflater()
-                .inflate(R.layout.infowindow, null);
-
-
-        TextView title = (TextView) v.findViewById(R.id.infowindowtitle);
-
-        title.setText(marker.getTitle());
-
-
-
-        return v;
+        return  null;
     }
 }

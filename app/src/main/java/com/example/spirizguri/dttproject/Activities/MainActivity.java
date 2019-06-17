@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.example.spirizguri.dttproject.R;
 import com.example.spirizguri.dttproject.Utils.CheckGpsAndInternet;
-import com.example.spirizguri.dttproject.Utils.RetryClickListener;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -101,15 +100,10 @@ public class MainActivity extends AppCompatActivity {
         if(!CheckGpsAndInternet.checkGPSEnabled(this))
             (CheckGpsAndInternet.AlertDialogueGpsDisabled(this)).show();
         else if (!CheckGpsAndInternet.checkInternetConnectivity(this))
-            ( CheckGpsAndInternet.AlertDialogueNoInternet(this,onRetry)).show();
+            ( CheckGpsAndInternet.AlertDialogueNoInternet(this)).show();
     }
 
-    private final RetryClickListener onRetry = new RetryClickListener() {
-        @Override
-        public void onRetryClick() {
-            CheckGpsAndInternetConnectivity();
-        }
-    };
+
 
 
 }

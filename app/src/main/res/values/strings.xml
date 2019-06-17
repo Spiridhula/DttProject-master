@@ -1,7 +1,25 @@
 <resources>
-    <string name="app_name">Dtt Project</string>
+    <string name="app_name">RSR Pechhulp</string>
     <string name="hi">Map</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_maps2">Map</string>
     <string name="textview">TextView</string>
+
+
+    <string name ="btnBack">Rsr Pechhulp</string>
+    <string name="callBtn">Bel RSR Nu</string>
+    <string name="dialBtn">Bel nu</string>
+
+    <string name="title_text">Belkosten</string>
+    <string name="undertext">Voor dit nummer betaalt u uw gebruikelijke belkosten</string>
+
+    <string name="cancelBtn">Annuleren</string>
+
+    <string name="rsrBtn">RSR Pechhulp</string>
+
+
+
+    <string name="popup_address_info">Onthoud deze locatie voor het telefoongesprek.</string>
+    <string name="popup_address_title">Uw Locatie:</string>
+    <string name="popup_address_obtaining">Verkrijgen adres&#8230;</string>
 </resources>

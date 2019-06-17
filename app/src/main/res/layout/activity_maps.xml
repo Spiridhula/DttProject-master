@@ -20,18 +20,18 @@
         <Button
             android:id="@+id/btnback"
 
-            android:layout_width="105dp"
-            android:layout_height="44dp"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
+            android:layout_marginStart="10dp"
 
 
-            android:layout_marginTop="0dp"
+            android:layout_marginTop="5dp"
             android:background="#0097A7 "
             android:drawableStart="@drawable/menu_arrow"
-            android:text="RSR Pechhulp"
-            android:textColor="#c3d043" />
+            android:text="@string/btnBack"
+            android:textColor="@android:color/white" />
     </RelativeLayout>
 
     <fragment
@@ -67,13 +67,13 @@
 
             <TextView
                 android:id="@+id/titletext"
-                style=""
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_marginTop="16dp"
                 android:gravity="center_horizontal"
-                android:text="Belkosten"
+                android:text="@string/title_text"
                 android:textColor="@android:color/white"/>
 
             <Button
@@ -89,7 +89,11 @@
 
 
                 android:onClick="DialClick"
-                android:text="Bel nu" />
+                android:text="@string/dialBtn"
+                android:layout_marginBottom="20dip"
+                android:layout_gravity="right|bottom"
+                android:gravity="center"
+                android:padding="12dip"/>
 
             <TextView
                 android:id="@+id/undertext"
@@ -98,7 +102,7 @@
                 android:layout_above="@id/btn_maps_dial"
                 android:layout_below="@id/titletext"
                 android:gravity="center"
-                android:text="Voor dit nummer betaalt u uw gebruikelijke belkosten"
+                android:text="@string/undertext"
                 android:textColor="@android:color/white"/>
         </RelativeLayout>
 
@@ -109,7 +113,8 @@
             android:layout_above="@id/callpopup_content"
             android:layout_alignStart="@id/callpopup_content"
             android:onClick="btnPopupCloseClick"
-            android:text="Annuleren"
+            android:text="@string/cancelBtn"
+
             android:background="#0097A7"
             android:textColor="@android:color/white"
 
@@ -118,16 +123,20 @@
 
     <Button
         android:id="@+id/callbtn"
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
+        android:layout_width="164dp"
+        android:layout_height="37dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="39dp"
+
         android:background="@drawable/button_background"
         android:drawableStart="@drawable/main_btn_tel"
         android:onClick="btnCallNowClick"
-
-        android:text="Bel RSR nu" />
+        android:layout_marginBottom="20dip"
+        android:layout_gravity="right|bottom"
+        android:gravity="center"
+        android:padding="10dip"
+        android:text="@string/callBtn"
+        android:textColor="@android:color/white"/>
 
     <ImageView
         android:id="@+id/location_obtaining"

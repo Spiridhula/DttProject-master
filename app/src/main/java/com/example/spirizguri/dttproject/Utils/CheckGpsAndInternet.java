@@ -61,7 +61,7 @@ public class CheckGpsAndInternet {
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
 
-    public static AlertDialog AlertDialogueNoInternet(final Activity activity,final RetryClickListener retryClickListener) {
+    public static AlertDialog AlertDialogueNoInternet(final Activity activity) {
         final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setMessage("Unable to locate your address.Please check your connection")
                 .setTitle("Internet Error")
@@ -69,7 +69,7 @@ public class CheckGpsAndInternet {
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        retryClickListener.onRetryClick();
+                       activity.startActivity(new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS));
 
                     }
                 })

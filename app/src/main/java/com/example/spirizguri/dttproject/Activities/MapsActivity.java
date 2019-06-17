@@ -172,12 +172,13 @@ public class MapsActivity extends FragmentActivity implements GoogleMap.OnInfoWi
                                     .title(addressString)
 
 
-                                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE))
+                                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.map_marker))
                                     .visible(true);
                             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoomLevel));
 
 
                             InfoWindowCustom infowindow = new InfoWindowCustom(MapsActivity.this);
+
                             googleMap.setInfoWindowAdapter(infowindow);
                             googleMap.addMarker(markerOptions).showInfoWindow();
                         }

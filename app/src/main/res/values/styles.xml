@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -9,6 +9,10 @@
     </style>
     <style name="ActionBar" parent="Widget.AppCompat.ActionBar">
         <item name="android:background">@drawable/btn_bg</item>
+        <item name= "android:layout_width">match_parent</item>
+         <item name= "android:layout_height">60dp</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name ="android:layout_alignParentTop">true</item>
     </style>
 
 
@@ -61,6 +65,45 @@
         <item name="android:layout_marginStart">33dp</item>
         <item name="android:layout_marginEnd">33dp</item>
         <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="BtnBack" parent ="@android:style/Widget.Button">
+    <item name="android:textSize">19sp</item>
+        <item name = "android:text"> RSR Pechhulp</item>
+    <item name="android:textColor">@android:color/white</item>
+        <item name = "android:layout_width">144dp</item>
+        <item name = "android:layout_height">56dp</item>
+    <item name="layout_constraintBottom_toBottomOf">parent</item>
+    <item name="layout_constraintStart_toStartOf">parent</item>
+    <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="android:background">@drawable/btn_bg</item>
+        <item name="android:drawableLeft">@drawable/menu_arrow</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name ="android:layout_centerVertical">true</item>
+        <item name="android:layout_marginStart">15dp</item>
+    </style>
+
+
+
+
+
+    <style name ="CallNow" parent="@android:style/Widget.Button">
+        <item name = "android:layout_width">match_parent</item>
+        <item name=" android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name ="android:layout_gravity">right|bottom</item>
+
+        <item name ="android:layout_marginBottom">20dip</item>
+        <item name ="android:background">@drawable/main_btn_bg</item>
+
+
+
+        <item name ="android:drawableStart">@drawable/main_btn_phone</item>
+        <item name = "android:gravity">center</item>
+        <item name ="android:onClick">DialClick</item>
+        <item name = "android:padding">12dip</item>
+        <item name ="android:text">@string/dialBtn</item>
+        <item name = "android:textColor">@android:color/white</item>
     </style>
 
 </resources>
